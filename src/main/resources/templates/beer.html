@@ -11,5 +11,10 @@
     <!--/*@thymesVar id="beer" type="java.lang.String"*/-->
     <strong th:utext="${beer}"></strong>
 </p>
+<form method="post" action="/beers/hello">
+    <label>choose your own:
+        <input type="text" name="customBeer">
+    </label>
+</form>
 </body>
 </html>
