@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Beers!</title>
 </head>
 <body>
-Hello Chmielu!
+<h1>Hello Chmielu!</h1>
+<p>
+    Here is a beer for you:
+    <!--/*@thymesVar id="beer" type="java.lang.String"*/-->
+    <strong th:utext="${beer}"></strong>
+</p>
 </body>
 </html>
