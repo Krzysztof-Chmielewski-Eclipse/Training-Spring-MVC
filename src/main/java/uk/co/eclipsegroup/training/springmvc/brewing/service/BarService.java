@@ -5,6 +5,7 @@ import uk.co.eclipsegroup.training.springmvc.brewing.model.Beer;
 import uk.co.eclipsegroup.training.springmvc.brewing.repository.BeerRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BarService {
@@ -16,5 +17,17 @@ public class BarService {
 
     public List<Beer> getAll() {
         return repository.fetchAll();
+    }
+
+    public Optional<Beer> get(String id) {
+        return repository.fetch(id);
+    }
+
+    public Beer save(Beer beer) {
+        return repository.store(beer);
+    }
+
+    public Optional<Beer> delete(String id) {
+        return repository.remove(id);
     }
 }
