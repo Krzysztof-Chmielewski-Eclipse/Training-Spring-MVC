@@ -5,12 +5,13 @@
     <title>Eclipse Brewing Company</title>
 </head>
 <body>
+<h1 th:utext="#{welcome.message}"></h1>
 <p>
     <!--/*@thymesVar id="customBeer" type="java.lang.String"*/-->
     <strong th:utext="${customBeer}"></strong>
 </p>
 <form method="post" action="/beers/hello">
-    <label>Chose your own custom beer:
+    <label><span th:utext="#{choose.custom.beer}"></span>
         <input type="text" name="customBeer">
     </label>
 </form>
