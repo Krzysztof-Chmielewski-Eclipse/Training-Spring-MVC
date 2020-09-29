@@ -6,8 +6,13 @@
 </head>
 <body>
 <p>
-    <!--/*@thymesVar id="beer" type="java.lang.String"*/-->
-    <strong th:utext="${beer}"></strong>
+    <!--/*@thymesVar id="customBeer" type="java.lang.String"*/-->
+    <strong th:utext="${customBeer}"></strong>
 </p>
+<form method="post" action="/beers/hello">
+    <label>Chose your own custom beer:
+        <input type="text" name="customBeer">
+    </label>
+</form>
 </body>
 </html>
