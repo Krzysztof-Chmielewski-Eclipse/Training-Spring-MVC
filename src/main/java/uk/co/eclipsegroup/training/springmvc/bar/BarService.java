@@ -15,4 +15,12 @@ public class BarService {
     public List<Beer> getAll() {
         return barRepository.fetchAll();
     }
+
+    public Beer save(Beer beer) {
+        return barRepository.store(beer);
+    }
+
+    public Beer delete(String id) {
+        return barRepository.remove(id);
+    }
 }

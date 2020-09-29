@@ -3,16 +3,34 @@ package uk.co.eclipsegroup.training.springmvc.bar;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 @Profile("test")
 public class TestBarRepository implements BarRepository {
-    private final List<Beer> beers = Arrays.asList(new Beer("Chmielu Strong IPA"), new Beer("Chmielu Stronger IPA"));
+    private final Map<String, Beer> beers = new ConcurrentHashMap<>();
+
+    public TestBarRepository() {
+        beers.putAll(Map.of(
+                "1", new Beer("1", "Chmielu Strong IPA", true),
+                "2", new Beer("2", "Chmielu Stronger IPA", true)));
+    }
 
     @Override
     public List<Beer> fetchAll() {
-        return beers;
+        return new ArrayList<>(beers.values());
+    }
+
+    @Override
+    public Beer store(Beer beer) {
+        return beers.put(beer.getId(), beer);
+    }
+
+    @Override
+    public Beer remove(String id) {
+        return beers.remove(id);
     }
 }

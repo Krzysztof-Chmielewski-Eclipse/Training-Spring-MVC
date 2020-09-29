@@ -79,6 +79,6 @@ class BarControllerExternalApiTest {
     }
 
     private List<Beer> beers() {
-        return Arrays.asList(new Beer("Chmielu Strong IPA"), new Beer("Chmielu Stronger IPA"));
+        return Arrays.asList(new Beer("1", "Chmielu Strong IPA", true), new Beer("2", "Chmielu Stronger IPA", true));
     }
 }
