@@ -7,9 +7,12 @@
 <body>
 <h1>Hello Chmielu!</h1>
 <p>
-    Here is a beer for you:
+    <span th:utext="#{welcome.message}"></span>
     <!--/*@thymesVar id="beer" type="java.lang.String"*/-->
     <strong th:utext="${beer}"></strong>
+</p>
+<p>
+    <span th:utext="#{lucky.beer('IPA')}"></span>
 </p>
 <form method="post" action="/beers/hello">
     <label>choose your own:
