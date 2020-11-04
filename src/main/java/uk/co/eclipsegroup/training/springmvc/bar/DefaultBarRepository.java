@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -37,6 +38,11 @@ public class DefaultBarRepository implements BarRepository {
         return deleteBeer(id).getBody();
     }
 
+    @Override
+    public Beer findBeer(String id) {
+        return fetchBeer(id).getBody();
+    }
+
     private ResponseEntity<Beer> deleteBeer(String id) {
         return restTemplate.exchange(urlApi + "beers/" + id, HttpMethod.DELETE, null,
                 new ParameterizedTypeReference<>() {
@@ -47,6 +53,16 @@ public class DefaultBarRepository implements BarRepository {
         return restTemplate.exchange(urlApi + "beers", HttpMethod.POST, new HttpEntity<>(beer),
                 new ParameterizedTypeReference<>() {
                 });
+    }
+
+    private ResponseEntity<Beer> fetchBeer(String id) {
+        try {
+            return restTemplate.exchange(urlApi + "beers/" + id, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<>() {
+                    });
+        } catch (HttpClientErrorException e) {
+            throw new BeerNotFoundException(id);
+        }
     }
 
     private ResponseEntity<List<Beer>> fetchAllBeers() {

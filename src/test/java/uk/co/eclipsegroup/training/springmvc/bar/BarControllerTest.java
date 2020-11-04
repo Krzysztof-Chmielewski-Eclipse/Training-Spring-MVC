@@ -6,8 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
@@ -40,5 +42,35 @@ class BarControllerTest {
         });
 
         assertThat(beers).isNotEmpty().extracting(Beer::getName).allMatch(b -> b.contains("Chmielu"));
+    }
+
+    @Test
+    void cannotRemoveAlcoholFromBar() throws Exception {
+        var mvcResult = mockMvc.perform(get("/bar/remove-alcohol"))
+                .andExpect(status().is(HttpStatus.METHOD_NOT_ALLOWED.value()))
+                .andReturn();
+
+        var message = mvcResult.getResponse().getContentAsString();
+
+        assertThat(message).isNotEmpty();
+    }
+
+    @Test
+    void cannotFetchNonExistentBeer() throws Exception {
+        mockMvc.perform(get("/bar/3"))
+                .andExpect(status().is(HttpStatus.NOT_FOUND.value()))
+                .andReturn();
+    }
+
+    @Test
+    void canFetchBeer_thatIsInTheBar() throws Exception {
+        var mvcResult = mockMvc.perform(get("/bar/1"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        var beer = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<Beer>() {
+        });
+
+        assertThat(beer).isNotNull().extracting(Beer::getId).isEqualTo("1");
     }
 }

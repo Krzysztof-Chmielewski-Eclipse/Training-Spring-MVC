@@ -8,4 +8,6 @@ interface BarRepository {
     Beer store(Beer beer);
 
     Beer remove(String id);
+
+    Beer findBeer(String id);
 }

@@ -23,4 +23,8 @@ public class BarService {
     public Beer delete(String id) {
         return barRepository.remove(id);
     }
+
+    public Beer getBeer(String id) {
+        return barRepository.findBeer(id);
+    }
 }
