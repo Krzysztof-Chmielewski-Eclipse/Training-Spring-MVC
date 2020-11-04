@@ -5,6 +5,7 @@ import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -36,5 +37,13 @@ class BeerControllerTest {
 
         softly.assertThat(mvcResult.getModelAndView().getViewName()).isEqualTo("beer");
         softly.assertThat(mvcResult.getModelAndView().getModel().get("customBeer")).isEqualTo(beerName);
+    }
+
+    @Test
+    void itsNotGoodToSayGoodbye() throws Exception {
+        var mvcResult = mockMvc.perform(get("/beers/byebye"))
+                .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .andReturn();
+
     }
 }
