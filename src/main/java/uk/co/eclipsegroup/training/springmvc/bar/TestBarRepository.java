@@ -33,4 +33,13 @@ public class TestBarRepository implements BarRepository {
     public Beer remove(String id) {
         return beers.remove(id);
     }
+
+    @Override
+    public Beer findById(String id) {
+        var beer = beers.get(id);
+        if (beer == null) {
+            throw new BeerNotFoundException(id);
+        }
+        return beer;
+    }
 }

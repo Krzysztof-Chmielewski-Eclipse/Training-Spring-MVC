@@ -1,5 +1,7 @@
 package uk.co.eclipsegroup.training.springmvc.bar;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,16 @@ public class BarController {
     @GetMapping
     public List<Beer> list() {
         return barService.getAll();
+    }
+
+    @GetMapping("{id}")
+    public Beer getById(@PathVariable String id) {
+        return barService.getById(id);
+    }
+
+    @GetMapping("remove-alcohol")
+    public ResponseEntity<String> noCanDo() {
+        return new ResponseEntity<>("You wish!", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping

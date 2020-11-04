@@ -3,6 +3,7 @@ package uk.co.eclipsegroup.training.springmvc.bar;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BarService {
@@ -22,5 +23,9 @@ public class BarService {
 
     public Beer delete(String id) {
         return barRepository.remove(id);
+    }
+
+    public Beer getById(String id) {
+        return barRepository.findById(id);
     }
 }
